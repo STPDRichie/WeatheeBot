@@ -1,5 +1,6 @@
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -17,15 +18,49 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public void onUpdateReceived(Update update) {
-        if (update.getMessage() != null && update.getMessage().hasText()) {
-            long chat_id = update.getMessage().getChatId();
+        Message message = update.getMessage();
 
-            try {
-                execute(new SendMessage(chat_id, "Yo " + update.getMessage().getText()));
+        if (message != null && message.hasText()) {
+
+            switch (message.getText()) {
+                case "/help":
+                    sendMessage(message, "Я WeatherBot. \n" + "Введи название города, и я покажу погоду в нём.");
+                    break;
+
+                case "/start":
+                    sendMessage(message, "Введи название города, в котором хочешь узнать погоду.");
+                    break;
+
+                case "Екатеринбург":
+                    sendMessage(message,
+                            "Город: " + message.getText() + "\n" +
+                                    "Температура: 5 C°" + "\n" +
+                                    "Влажность: 75%" + "\n" +
+                                    "Скорость ветра: 3.0 м/с" + "\n" +
+                                    "Но это не точно");
+                    break;
+
+                default:
+                    if (message.getText().indexOf('/') == 0) {
+                        sendMessage(message, "Неизвестная команда");
+                        break;
+                    } else {
+                        sendMessage(message, "Не знаю такого города. Пока я могу показать погоду только в одном (((");
+                    }
+
             }
-            catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+        }
+    }
+
+    public void sendMessage(Message message, String text) {
+        SendMessage sendMessage = new SendMessage()
+                .setChatId(message.getChatId())
+                .setText(text);
+
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 }
