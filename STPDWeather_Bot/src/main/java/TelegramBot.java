@@ -6,6 +6,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class TelegramBot extends TelegramLongPollingBot {
 
+    Bot telegramBot = new Bot();
+
     public String getBotToken() {
         return System.getenv("WEATHERBOT_TOKEN");
     }
@@ -21,7 +23,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         if (message.hasText()) {
 
-            String reply = Bot.getReplyToMessage(text);
+            String reply = telegramBot.getReplyToMessage(text);
 
             sendMessage(message.getChatId(), reply);
         }

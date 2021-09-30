@@ -1,6 +1,6 @@
 public class Bot {
 
-    public static String getReplyToMessage(String text) {
+    public String getReplyToMessage(String text) {
 
         if (text.indexOf('/') == 0) {
             return getReplyToCommand(text);
@@ -10,7 +10,7 @@ public class Bot {
 
     }
 
-    public static String getReplyToCommand(String command) {
+    public String getReplyToCommand(String command) {
         String reply;
 
         switch (command) {
@@ -29,7 +29,7 @@ public class Bot {
         return reply;
     }
 
-    public static String getWeather(String city) {
+    public String getWeather(String city) {
         String reply;
 
         switch (city) {
@@ -40,7 +40,7 @@ public class Bot {
                         "Скорость ветра: 3.0 м/с" + "\n" +
                         "Но это не точно";
                 break;
-            
+
             case "Челябинск":
                 reply = "Город: " + city + "\n" +
                         "Температура: 7 C°" + "\n" +
