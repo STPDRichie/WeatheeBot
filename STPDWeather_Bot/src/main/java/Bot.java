@@ -1,4 +1,16 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Bot {
+
+    public Map<String, String> commands = new HashMap<>();
+
+    public Bot() {
+        commands.put("/start",
+                "Введи название города, в котором хочешь узнать погоду.");
+        commands.put("/help",
+                "Я WeatherBot." + "\n" + "Введи название города, и я покажу погоду в нём.");
+    }
 
     public String getReplyToMessage(String text) {
 
@@ -11,22 +23,19 @@ public class Bot {
     }
 
     public String getReplyToCommand(String command) {
-        String reply;
+        StringBuilder reply;
 
-        switch (command) {
-            case "/help":
-                reply = "Я WeatherBot. \n" + "Введи название города, и я покажу погоду в нём.";
-                break;
-
-            case "/start":
-                reply = "Введи название города, в котором хочешь узнать погоду.";
-                break;
-
-            default:
-                reply = "Неизвестная команда";
+        if (commands.containsKey(command)) {
+            reply = new StringBuilder(commands.get(command));
+        } else {
+            reply = new StringBuilder("Неизвестная команда..." + "\n" +
+                    "Список команд:" + "\n");
+            for (String c : commands.keySet()) {
+                reply.append("\n").append(c);
+            }
         }
 
-        return reply;
+        return reply.toString();
     }
 
     public String getWeather(String city) {
