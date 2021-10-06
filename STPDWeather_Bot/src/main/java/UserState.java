@@ -4,6 +4,9 @@ import java.util.Map;
 
 public class UserState {
 
-    public Map<Long, List<String>> defaultCities = new HashMap<>();
+//    public static Map<Long, List<String>> defaultCities = new HashMap<>();
 
+    public long chatId;
+
+    public List<String> defaultCities;
 }

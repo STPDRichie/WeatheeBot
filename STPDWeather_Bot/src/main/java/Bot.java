@@ -10,6 +10,10 @@ public class Bot {
                 "Введи название города, в котором хочешь узнать погоду.");
         commands.put("/help",
                 "Я WeatherBot." + "\n" + "Введи название города, и я покажу погоду в нём.");
+        commands.put("/myCities",
+                getDefaultCities());
+        commands.put("/addToMyCities",
+                addCityToDefault("asd"));
     }
 
     public String getReplyToMessage(String text) {
@@ -63,5 +67,13 @@ public class Bot {
         }
 
         return reply;
+    }
+
+    public String getDefaultCities() {
+        return "";
+    }
+
+    public void addCityToDefault(String city) {
+        // "Будет добавлять город в defaultCities ( /add __cityName__ )"
     }
 }
