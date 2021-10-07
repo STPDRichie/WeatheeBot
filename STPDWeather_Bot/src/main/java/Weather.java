@@ -38,10 +38,10 @@ public class Weather {
 
         String temperature = tempFormat.format(model.getTemperature() - 273.15);
 
-        String info = "Город: " + model.getName() + "\n" +
-                "Температура: " + temperature + " C°\n" +
-                "Влажность: " + model.getHumidity() + "%\n" +
-                "Скорость ветра: " + model.getWindSpeed() + " м/с\n";
+        String info = "\uD83C\uDF07 Город: " + model.getName() + "\n" +
+                "\uD83D\uDD06 Температура: " + temperature + " C°\n" +
+                "\uD83D\uDCA7 Влажность: " + model.getHumidity() + "%\n" +
+                "\uD83C\uDF43 Скорость ветра: " + model.getWindSpeed() + " м/с\n";
 
         return (new String[] {info, temperature});
     }

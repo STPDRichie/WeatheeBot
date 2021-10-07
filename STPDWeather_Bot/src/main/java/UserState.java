@@ -8,8 +8,8 @@ public class UserState {
     private final String[] defaultCities = new String[] {
             "Екатеринбург",
             "Челябинск",
-            "Тагил",
-            "Москва",
+            "Нижний Тагил",
+            "Пермь",
     };
 
     String[] getCities(String chatId) {
