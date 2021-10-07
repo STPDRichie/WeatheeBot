@@ -1,79 +1,81 @@
+import org.telegram.telegrambots.meta.api.objects.Message;
+
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Bot {
 
-    public Map<String, String> commands = new HashMap<>();
+    private final WeatherModel model = new WeatherModel();
+    private final Weather weather = new Weather();
+    private final UserState userState = new UserState();
 
-    public Bot() {
+    private final HashMap<Long, String> lastMessages = new HashMap<>();
+    private final HashMap<String, String> commands = new HashMap<>();
+
+    Bot() {
         commands.put("/start",
-                "Введи название города, в котором хочешь узнать погоду.");
+                "Введи название города, в котором хочешь узнать погоду");
         commands.put("/help",
-                "Я WeatherBot." + "\n" + "Введи название города, и я покажу погоду в нём.");
+                "Привет! Я STPDWeatherBot" + "\n" + "Напиши название города, и я покажу погоду в нём" + "\n" +
+                "Также ты можешь сохранить четыре избранных города и получать погоду, просто нажав на кнопку");
         commands.put("/myCities",
-                getDefaultCities());
-        commands.put("/addToMyCities",
-                addCityToDefault("asd"));
+                "Секундочку...");
+        commands.put("/setFavouriteCities",
+                "Напиши названия четырёх избранных городов" + "\n" +
+                "Формат: \"1. Город 2. Город 3. Город 4. Город\"");
     }
 
-    public String getReplyToMessage(String text) {
+    public String getReplyToMessage(Message message) {
 
-        if (text.indexOf('/') == 0) {
-            return getReplyToCommand(text);
+        if (Character.isDigit(message.getText().charAt(0)) &&
+                lastMessages.get(message.getChatId()).equals("/setFavouriteCities")) {
+            userState.setCities(message);
+            return "Список изменён";
+        }
+
+        lastMessages.put(message.getChatId(), message.getText());
+
+        if (lastMessages.get(message.getChatId()).equals("/myCities")) {
+            String[] cities = userState.getCities(message.getChatId().toString());
+            return "Твои избранные города: " + "\n" +
+                    cities[0] + "\n" + cities[1] + "\n" +
+                    cities[2] + "\n" + cities[3];
+        }
+
+
+        if (message.getText().indexOf('/') == 0) {
+            return getReplyToCommand(message);
         } else {
-            return getWeather(text);
+            return getWeather(message);
         }
 
     }
 
-    public String getReplyToCommand(String command) {
+    public String getReplyToCommand(Message message) {
         StringBuilder reply;
 
-        if (commands.containsKey(command)) {
-            reply = new StringBuilder(commands.get(command));
+        if (commands.containsKey(message.getText())) {
+            reply = new StringBuilder(commands.get(message.getText()));
         } else {
-            reply = new StringBuilder("Неизвестная команда..." + "\n" +
-                    "Список команд:" + "\n");
-            for (String c : commands.keySet()) {
-                reply.append("\n").append(c);
+            reply = new StringBuilder("Неизвестная команда..." + "\n\n" +
+                    "Список команд:");
+            for (String command : commands.keySet()) {
+                reply.append("\n").append(command);
             }
         }
 
         return reply.toString();
     }
 
-    public String getWeather(String city) {
-        String reply;
+    public String getWeather(Message message) {
+        String[] resultWeather;
 
-        switch (city) {
-            case "Екатеринбург":
-                reply = "Город: " + city + "\n" +
-                        "Температура: 5 C°" + "\n" +
-                        "Влажность: 75%" + "\n" +
-                        "Скорость ветра: 3.0 м/с" + "\n" +
-                        "Но это не точно";
-                break;
-
-            case "Челябинск":
-                reply = "Город: " + city + "\n" +
-                        "Температура: 7 C°" + "\n" +
-                        "Влажность: 80%" + "\n" +
-                        "Скорость ветра: 6.0 м/с" + "\n" +
-                        "Но это не точно";
-                break;
-
-            default:
-                reply = "Не знаю такого города. Пока я могу показать погоду только в двух (((";
+        try {
+            resultWeather = weather.getWeather(message.getText(), model);
+        } catch (IOException e) {
+            return "Город не найден(((";
         }
 
-        return reply;
-    }
-
-    public String getDefaultCities() {
-        return "";
-    }
-
-    public void addCityToDefault(String city) {
-        // "Будет добавлять город в defaultCities ( /add __cityName__ )"
+        return resultWeather[0];
     }
 }

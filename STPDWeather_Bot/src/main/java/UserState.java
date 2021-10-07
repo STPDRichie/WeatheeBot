@@ -1,12 +1,30 @@
+import org.telegram.telegrambots.meta.api.objects.Message;
+
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class UserState {
 
-//    public static Map<Long, List<String>> defaultCities = new HashMap<>();
+    private final HashMap<String, String[]> favouriteCities = new HashMap<>();
+    private final String[] defaultCities = new String[] {
+            "Екатеринбург",
+            "Челябинск",
+            "Тагил",
+            "Москва",
+    };
 
-    public long chatId;
+    String[] getCities(String chatId) {
+        if (favouriteCities.containsKey(chatId)) {
+            return favouriteCities.get(chatId);
+        }
 
-    public List<String> defaultCities;
+        return defaultCities;
+    }
+
+    void setCities(Message message) {
+        String[] splitText = message.getText().split("[0-9]\\.");
+        String[] cities = new String[4];
+        System.arraycopy(splitText, 1, cities, 0, 4);
+
+        favouriteCities.put(message.getChatId().toString(), cities);
+    }
 }

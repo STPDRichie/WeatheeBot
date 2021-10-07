@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49227341-eb1d-43d0-b287-f53e949e4456" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Weather.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/WeatherModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelegramBot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/UserState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserState.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -49,6 +54,7 @@
       <envs>
         <env name="WEATHERBOT_TOKEN" value="2033333636:AAFARfll7qSN0QdFopeIRE5hRX740o_76n4" />
         <env name="WEATHERBOT_USERNAME" value="STPDWeather_Bot" />
+        <env name="OPENWEATHER_API_TOKEN" value="ca69cb81718f066aebfc3fa8c0139f37" />
       </envs>
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="STPDWeather_Bot" />

@@ -19,17 +19,16 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
 
         Message message = update.getMessage();
-        String text = message.getText();
 
         if (message.hasText()) {
 
-            String reply = telegramBot.getReplyToMessage(text);
+            String reply = telegramBot.getReplyToMessage(message);
 
             sendMessage(message.getChatId(), reply);
         }
     }
 
-    public void sendMessage(Long chatId, String text) {
+    private void sendMessage(Long chatId, String text) {
         SendMessage sendMessage = new SendMessage()
                 .setChatId(chatId)
                 .setText(text);
