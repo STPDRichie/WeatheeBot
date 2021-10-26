@@ -21,7 +21,10 @@ public class WeatherGetter {
     public WeatherModel getWeather(String city) throws IOException {
         WeatherModel model = new WeatherModel();
 
-        URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + city +
+        URL url = new URL("https://api.openweathermap.org/data/2.5/weather?" +
+                "q=" + city +
+                "&units=" + "metric" +
+                "&lang=" + "ru" +
                 "&appid=" + System.getenv("OPENWEATHER_API_TOKEN"));
 
         Scanner scanner = new Scanner((InputStream) url.getContent());
@@ -35,7 +38,7 @@ public class WeatherGetter {
         HashMap<String, Object> windMap = jsonToMap(respMap.get("wind").toString());
 
         String cityName = new JSONObject(result.toString()).getString("name");
-        Double temp = (double)(mainMap.get("temp")) - 273.15;
+        Double temp = (double)(mainMap.get("temp"));
         Double humidity = (double)(mainMap.get("humidity"));
         Double windSpeed = (double)(windMap.get("speed"));
 
