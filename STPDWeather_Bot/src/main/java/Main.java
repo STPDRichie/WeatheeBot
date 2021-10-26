@@ -24,12 +24,11 @@ TODO Замечания:
     + UserState -> UserStateRepo
     + Убрать из Bot и UserStateRepo завязку на Telegram
     + Свой класс для всего состояния пользователя: favouriteCities и lastMessages
-    Weather -> ???
-        String[] -> Класс
-    Изменить десериализацию ( +1 балл )
-    Кнопки в телеграме
-    WeatherModel убрать
+    + Weather -> ???
+    +     String[] -> Класс
+    + Изменить десериализацию ( +1 балл )
     Обработка исключений при получении из API
+    Кнопки в телеграме
 
 TODO Микро:
     Замена одного конкретного города в favouriteCities

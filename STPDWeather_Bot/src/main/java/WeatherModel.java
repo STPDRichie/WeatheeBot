@@ -1,17 +1,22 @@
 public class WeatherModel {
 
-    private String name;
+    private String formatInfo;
+    private String cityName;
     private Double temperature;
     private Double humidity;
     private Double windSpeed;
-    private Integer id;
+    private Double rain;
 
-    String getName() {
-        return name;
+    String getFormatInfo() { return formatInfo; }
+
+    void setFormatInfo(String formatInfo) { this.formatInfo = formatInfo; }
+
+    String getCityName() {
+        return cityName;
     }
 
-    void setName(String name) {
-        this.name = name;
+    void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     Double getTemperature() {
@@ -38,11 +43,7 @@ public class WeatherModel {
         this.windSpeed = windSpeed;
     }
 
-    Integer getId() {
-        return id;
-    }
+    Double getRain() { return rain; }
 
-    void setId(Integer id) {
-        this.id = id;
-    }
+    void setRain(Double rain) { this.rain = rain; }
 }

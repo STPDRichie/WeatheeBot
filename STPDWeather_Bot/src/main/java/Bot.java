@@ -3,8 +3,7 @@ import java.util.HashMap;
 
 public class Bot {
 
-    private final WeatherModel model = new WeatherModel();
-    private final Weather weather = new Weather();
+    private final WeatherGetter weatherGetter = new WeatherGetter();
     public final UserStateRepo userStateRepo = new UserStateRepo();
 
     private final HashMap<String, String> commands = new HashMap<>();
@@ -52,11 +51,11 @@ public class Bot {
 
     }
 
-    public String getReplyToCommand(String text) {
+    public String getReplyToCommand(String commandText) {
         StringBuilder reply;
 
-        if (commands.containsKey(text)) {
-            reply = new StringBuilder(commands.get(text));
+        if (commands.containsKey(commandText)) {
+            reply = new StringBuilder(commands.get(commandText));
         } else {
             reply = new StringBuilder("Не знаю такой команды... \uD83D\uDE22" + "\n\n" +
                     "Список команд:");
@@ -68,15 +67,15 @@ public class Bot {
         return reply.toString();
     }
 
-    public String getWeather(String text) {
-        String[] resultWeather;
+    public String getWeather(String cityName) {
+        WeatherModel model;
 
         try {
-            resultWeather = weather.getWeather(text, model);
+            model = weatherGetter.getWeather(cityName);
         } catch (IOException e) {
             return "Город не найден \uD83D\uDE1E";
         }
 
-        return resultWeather[0];
+        return model.getFormatInfo();
     }
 }
