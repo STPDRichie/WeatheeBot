@@ -2,7 +2,9 @@ import java.util.HashMap;
 
 public class UserStateRepo {
 
+    public final HashMap<Long, String> lastMessages = new HashMap<>();
     private final HashMap<String, String[]> favouriteCities = new HashMap<>();
+
     private final String[] defaultCities = new String[] {
             "Екатеринбург",
             "Челябинск",

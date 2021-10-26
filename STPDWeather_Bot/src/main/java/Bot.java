@@ -7,7 +7,6 @@ public class Bot {
     private final Weather weather = new Weather();
     public final UserStateRepo userStateRepo = new UserStateRepo();
 
-    private final HashMap<Long, String> lastMessages = new HashMap<>();
     private final HashMap<String, String> commands = new HashMap<>();
 
     Bot() {
@@ -17,7 +16,7 @@ public class Bot {
         commands.put("/help",
                 "Привет! \u270B Я STPDWeatherBot \u2601" + "\n" +
                 "Напиши название города, и я покажу погоду в нём!" + "\n" +
-                "Также ты можешь сохранить четыре избранных города командой /set_favourite_cities " + "\n" +
+                "Также ты можешь сохранить четыре избранных города командой /set_favourite_cities" + "\n" +
                 "Ещё можешь вывести список этих городов командой /my_cities");
         commands.put("/my_cities",
                 "Секундочку...");
@@ -30,14 +29,14 @@ public class Bot {
     public String getReplyToMessage(String text, Long chatId) {
 
         if (Character.isDigit(text.charAt(0)) &&
-                lastMessages.get(chatId).equals("/set_favourite_cities")) {
+                userStateRepo.lastMessages.get(chatId).equals("/set_favourite_cities")) {
             userStateRepo.setCities(text, chatId.toString());
             return "Список успешно изменён \uD83D\uDC4D";
         }
 
-        lastMessages.put(chatId, text);
+        userStateRepo.lastMessages.put(chatId, text);
 
-        if (lastMessages.get(chatId).equals("/my_cities")) {
+        if (userStateRepo.lastMessages.get(chatId).equals("/my_cities")) {
             String[] cities = userStateRepo.getCities(chatId.toString());
             return "\uD83C\uDF07 Твои избранные города: " + "\n" +
                     "1. " + cities[0] + "\n" + "2. " + cities[1] + "\n" +

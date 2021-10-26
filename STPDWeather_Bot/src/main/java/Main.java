@@ -23,11 +23,11 @@ public class Main {
 TODO Замечания:
     + UserState -> UserStateRepo
     + Убрать из Bot и UserStateRepo завязку на Telegram
-    Свой класс для всего состояния пользователя: cities и lastMessages
-    Изменить десериализацию ( +1 балл )
-    Кнопки перенести в TelegramBot
+    + Свой класс для всего состояния пользователя: favouriteCities и lastMessages
     Weather -> ???
         String[] -> Класс
+    Изменить десериализацию ( +1 балл )
+    Кнопки в телеграме
     WeatherModel убрать
     Обработка исключений при получении из API
 
