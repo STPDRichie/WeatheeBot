@@ -7,9 +7,9 @@
     <list default="true" id="49227341-eb1d-43d0-b287-f53e949e4456" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelegramBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UserState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Weather.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Weather.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UserState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserStateRepo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,10 +41,10 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="TODO_SCOPE" value="All Places" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Weather_Bot-master" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.21724138" />
-    <property name="settings.editor.selected.configurable" value="preferences.pathVariables" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">

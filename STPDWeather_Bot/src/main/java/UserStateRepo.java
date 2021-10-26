@@ -1,8 +1,6 @@
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 import java.util.HashMap;
 
-public class UserState {
+public class UserStateRepo {
 
     private final HashMap<String, String[]> favouriteCities = new HashMap<>();
     private final String[] defaultCities = new String[] {
@@ -20,11 +18,11 @@ public class UserState {
         return defaultCities;
     }
 
-    void setCities(Message message) {
-        String[] splitText = message.getText().split("[0-9]\\.");
+    void setCities(String text, String chatId) {
+        String[] splitText = text.split("[0-9]\\.");
         String[] cities = new String[4];
         System.arraycopy(splitText, 1, cities, 0, 4);
 
-        favouriteCities.put(message.getChatId().toString(), cities);
+        favouriteCities.put(chatId, cities);
     }
 }
