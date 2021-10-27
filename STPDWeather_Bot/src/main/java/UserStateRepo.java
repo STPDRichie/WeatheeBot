@@ -1,8 +1,10 @@
+import javassist.compiler.ast.Pair;
+
 import java.util.HashMap;
 
 public class UserStateRepo {
 
-    public final HashMap<Long, String> lastMessages = new HashMap<>();
+    public final HashMap<Long, String> lastMessage = new HashMap<>();
     private final HashMap<String, String[]> favouriteCities = new HashMap<>();
 
     private final String[] defaultCities = new String[] {
@@ -20,11 +22,19 @@ public class UserStateRepo {
         return defaultCities;
     }
 
-    void setCities(String text, String chatId) {
-        String[] splitText = text.split("[0-9]\\.");
-        String[] cities = new String[4];
-        System.arraycopy(splitText, 1, cities, 0, 4);
+    Boolean setCities(String text, String chatId) {
+        String[] cities = favouriteCities.getOrDefault(chatId, defaultCities);
+
+        String[] pairs = text.split("\\s?\\n\\s?");
+        if (pairs.length > 4) {
+            return false;
+        }
+        for (String pair : pairs) {
+            cities[Integer.parseInt(pair.split(". ")[0]) - 1] = pair.split(". ")[1];
+        }
 
         favouriteCities.put(chatId, cities);
+
+        return true;
     }
 }

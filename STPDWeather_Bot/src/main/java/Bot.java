@@ -21,21 +21,29 @@ public class Bot {
                 "Секундочку...");
         commands.put("/set_favourite_cities",
                 "Напиши названия четырёх избранных городов" + "\n" +
-                "\u270D Формат: \"1. Город 2. Город 3. Город 4. Город\"" + "\n" +
+                "\u270D Формат такой:" + "\n" +
+                "1. Город 1 \n" +
+                "2. Город 2 \n" +
+                "3. Город 3 \n" +
+                "4. Город 4 \n" + "\n" +
+                "Можешь писать в любом порядке и количестве, главное не дальше четвёртого города" + "\n" +
                 "Пиши правильно \u261D \uD83D\uDE43");
     }
 
     public String getReplyToMessage(String text, Long chatId) {
 
         if (Character.isDigit(text.charAt(0)) &&
-                userStateRepo.lastMessages.get(chatId).equals("/set_favourite_cities")) {
-            userStateRepo.setCities(text, chatId.toString());
-            return "Список успешно изменён \uD83D\uDC4D";
+                userStateRepo.lastMessage.get(chatId).equals("/set_favourite_cities")) {
+            if (userStateRepo.setCities(text, chatId.toString())) {
+                return "Список успешно изменён \uD83D\uDC4D";
+            } else {
+                return "Дальше четвёртого города нельзя... \uD83D\uDE12";
+            }
         }
 
-        userStateRepo.lastMessages.put(chatId, text);
+        userStateRepo.lastMessage.put(chatId, text);
 
-        if (userStateRepo.lastMessages.get(chatId).equals("/my_cities")) {
+        if (userStateRepo.lastMessage.get(chatId).equals("/my_cities")) {
             String[] cities = userStateRepo.getCities(chatId.toString());
             return "\uD83C\uDF07 Твои избранные города: " + "\n" +
                     "1. " + cities[0] + "\n" + "2. " + cities[1] + "\n" +
@@ -73,7 +81,7 @@ public class Bot {
         try {
             model = weatherGetter.getWeather(cityName);
         } catch (IOException e) {
-            return "Город не найден \uD83D\uDE1E";
+            return "Не знаю такого города \uD83D\uDE1E";
         }
 
         return model.getFormatInfo();
