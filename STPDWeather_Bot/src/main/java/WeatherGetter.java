@@ -51,6 +51,7 @@ public class WeatherGetter {
         model.setFormatInfo(formatInfo);
         model.setCityName(cityName);
         model.setTemp(temp);
+        model.setTempFeelsLike(tempFeelsLike);
         model.setHumidity(humidity);
         model.setWindSpeed(windSpeed);
 
