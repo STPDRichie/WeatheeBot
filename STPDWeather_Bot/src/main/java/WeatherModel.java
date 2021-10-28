@@ -2,48 +2,32 @@ public class WeatherModel {
 
     private String formatInfo;
     private String cityName;
-    private Double temperature;
+    private Double temp;
+    private Double tempFeelsLike;
     private Double humidity;
     private Double windSpeed;
-    private Double rain;
 
     String getFormatInfo() { return formatInfo; }
 
     void setFormatInfo(String formatInfo) { this.formatInfo = formatInfo; }
 
-    String getCityName() {
-        return cityName;
-    }
+    String getCityName() { return cityName; }
 
-    void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
+    void setCityName(String cityName) { this.cityName = cityName; }
 
-    Double getTemperature() {
-        return temperature;
-    }
+    Double getTemp() { return temp; }
 
-    void setTemperature(Double temperature) {
-        this.temperature = temperature;
-    }
+    void setTemp(Double temp) { this.temp = temp; }
 
-    Double getHumidity() {
-        return humidity;
-    }
+    Double getTempFeelsLike() { return tempFeelsLike; }
 
-    void setHumidity(Double humidity) {
-        this.humidity = humidity;
-    }
+    void setTempFeelsLike(Double tempFeelsLike) { this.tempFeelsLike = tempFeelsLike; }
 
-    Double getWindSpeed() {
-        return windSpeed;
-    }
+    Double getHumidity() { return humidity; }
 
-    void setWindSpeed(Double windSpeed) {
-        this.windSpeed = windSpeed;
-    }
+    void setHumidity(Double humidity) { this.humidity = humidity; }
 
-    Double getRain() { return rain; }
+    Double getWindSpeed() { return windSpeed; }
 
-    void setRain(Double rain) { this.rain = rain; }
+    void setWindSpeed(Double windSpeed) { this.windSpeed = windSpeed; }
 }

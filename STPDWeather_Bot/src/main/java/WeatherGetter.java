@@ -1,5 +1,3 @@
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -37,19 +35,22 @@ public class WeatherGetter {
         HashMap<String, Object> mainMap = jsonToMap(respMap.get("main").toString());
         HashMap<String, Object> windMap = jsonToMap(respMap.get("wind").toString());
 
-        String cityName = new JSONObject(result.toString()).getString("name");
-        Double temp = (double)(mainMap.get("temp"));
-        Double humidity = (double)(mainMap.get("humidity"));
-        Double windSpeed = (double)(windMap.get("speed"));
+        String cityName = (String) respMap.get("name");
+        Double temp = (double) mainMap.get("temp");
+        Double tempFeelsLike = (double) mainMap.get("feels_like");
+        Double humidity = (double) mainMap.get("humidity");
+        Double windSpeed = (double) windMap.get("speed");
 
         String formatInfo = "\uD83C\uDF07 Город: " + cityName + "\n" +
-                "\uD83D\uDD06 Температура: " + tempFormat.format(temp) + " C°\n" +
+                "\uD83D\uDD06 Температура: " +
+                    "по ощущениям " + tempFormat.format(tempFeelsLike) + " C°, " +
+                    "по факту " + tempFormat.format(temp) + " C°\n" +
                 "\uD83D\uDCA7 Влажность: " + humidity + "%\n" +
                 "\uD83C\uDF43 Скорость ветра: " + windSpeed + " м/с\n";
 
         model.setFormatInfo(formatInfo);
         model.setCityName(cityName);
-        model.setTemperature(temp);
+        model.setTemp(temp);
         model.setHumidity(humidity);
         model.setWindSpeed(windSpeed);
 
