@@ -10,7 +10,7 @@ public class UserStateRepo {
         favouriteCities = favCities;
     }
 
-    private final String[] defaultCities = new String[] {
+    public final String[] defaultCities = new String[] {
             "Екатеринбург",
             "Челябинск",
             "Нижний Тагил",

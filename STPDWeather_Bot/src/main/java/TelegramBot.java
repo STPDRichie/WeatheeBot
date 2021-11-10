@@ -1,4 +1,3 @@
-import org.apache.http.client.HttpResponseException;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -14,13 +13,11 @@ public class TelegramBot extends TelegramLongPollingBot {
     private final Bot telegramBot;
     private final String botToken;
     private final String botUsername;
-    private final BotReply botReply;
 
-    public TelegramBot(Bot bot, BotReply reply, String token, String username) {
+    public TelegramBot(Bot bot, String token, String username) {
         telegramBot = bot;
         botToken = token;
         botUsername = username;
-        botReply = reply;
     }
 
     public String getBotToken() { return botToken; }
@@ -32,8 +29,9 @@ public class TelegramBot extends TelegramLongPollingBot {
         Message message = update.getMessage();
 
         if (message.hasText()) {
-            botReply.message = telegramBot.getReplyToMessage(message.getText(), message.getChatId());
-            botReply.keyboardRows = botReply.createKeyboard(telegramBot, message.getChatId());
+            BotReply botReply = telegramBot.getReplyToMessage(message.getText(), message.getChatId());
+//            botReply.message = telegramBot.getReplyToMessage(message.getText(), message.getChatId());
+//            botReply.keyboardRows = botReply.createKeyboard(telegramBot, message.getChatId());
 
             sendMessage(message.getChatId(), botReply);
         }

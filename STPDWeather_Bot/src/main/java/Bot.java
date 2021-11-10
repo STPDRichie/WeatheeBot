@@ -8,14 +8,17 @@ public class Bot {
 
     private final WeatherGetter weatherGetter;
     public UserStateRepo userStateRepo;
+    private final BotReply botReply;
 
     private final HashMap<String, String> commands = new HashMap<>();
 
     private final DecimalFormat tempFormat = new DecimalFormat("0.00");
 
-    public Bot(WeatherGetter wGetter, UserStateRepo uStateRepo) {
+    public Bot(WeatherGetter wGetter, UserStateRepo repo, BotReply reply) {
         weatherGetter = wGetter;
-        userStateRepo = uStateRepo;
+        userStateRepo = repo;
+        botReply = reply;
+        botReply.keyboardRows = botReply.createKeyboard(userStateRepo);
 
         commands.put("/start",
                 "Введи название города, в котором хочешь узнать погоду" + "\n" +
@@ -38,14 +41,17 @@ public class Bot {
                         "Пиши правильно \u261D \uD83D\uDE43");
     }
 
-    public String getReplyToMessage(String text, Long chatId) {
+    public BotReply getReplyToMessage(String text, Long chatId) {
 
         if (Character.isDigit(text.charAt(0)) &&
                 userStateRepo.lastMessage.get(chatId.toString()).equals("/set_favourite_cities")) {
             if (userStateRepo.setFavouriteCities(text, chatId.toString())) {
-                return "Список успешно изменён \uD83D\uDC4D";
+                botReply.message = "Список успешно изменён \uD83D\uDC4D";
+            } else {
+                botReply.message = "Ошибка произошла... \uD83D\uDE22";
             }
-            return "Ошибка произошла... \uD83D\uDE22";
+            botReply.keyboardRows = botReply.createKeyboard(userStateRepo, chatId);
+            return botReply;
         }
 
         userStateRepo.lastMessage.put(chatId.toString(), text);
@@ -56,13 +62,16 @@ public class Bot {
             for (int i = 0; i < 4; i++) {
                 response.append("\n").append(i + 1).append(". ").append(cities[i]);
             }
-            return response.toString();
+            botReply.message = response.toString();
+            return botReply;
         }
 
         if (text.indexOf('/') == 0) {
-            return getReplyToCommand(text);
+            botReply.message = getReplyToCommand(text);
+        } else {
+            botReply.message = getWeather(text);
         }
-        return getWeather(text);
+        return botReply;
     }
 
     public static String[] parseCitiesSettingText(String[] cities, String text) {
@@ -72,6 +81,9 @@ public class Bot {
         }
 
         for (String pair : pairs) {
+            if (pair.split(". ").length == 1) {
+                return null;
+            }
             cities[Integer.parseInt(pair.split(". ")[0]) - 1] = pair.split(". ")[1];
         }
         return cities;

@@ -16,9 +16,9 @@ public class Main {
             botsApi.registerBot(new TelegramBot(
                     new Bot(
                             new WeatherGetter(System.getenv("OPENWEATHER_API_TOKEN")),
-                            new UserStateRepo(new HashMap<>(), new HashMap<>())
+                            new UserStateRepo(new HashMap<>(), new HashMap<>()),
+                            new BotReply()
                     ),
-                    new BotReply(),
                     System.getenv("WEATHERBOT_TOKEN"),
                     System.getenv("WEATHERBOT_USERNAME"))
             );
@@ -44,10 +44,8 @@ TODO Замечания:
     + Сообщения об ошибках могут обманывать
     + Обработка исключений при получении из API
     + formatInfo → Bot. Не надо это делать в коде десериализации.
-    Gson.fromJson — без ручного парсинга json-а
-        Изменить десериализацию ( +1 балл )
     + Кнопки телеграмма
-    BotReply telegramBot.getReplyToMessage(...)
+    + BotReply telegramBot.getReplyToMessage(...)
     + BotReply {
     +     String message;
     +     KeyboardButton[] buttons;
@@ -55,6 +53,9 @@ TODO Замечания:
     +     // ...
     + }
     + sendMessage(Long chatId, String text, KeyboardButton[] buttons) {}
+    lastMessage → DialogState - enum
+    Gson.fromJson — без ручного парсинга json-а
+        Изменить десериализацию ( +1 балл )
 
 TODO Микро:
     + Замена конкретных городов в favouriteCities
