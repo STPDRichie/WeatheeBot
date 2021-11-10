@@ -10,15 +10,19 @@ import java.util.ArrayList;
 
 public class TelegramBot extends TelegramLongPollingBot {
 
-    Bot telegramBot = new Bot();
+    private final Bot telegramBot;
+    private final String botToken;
+    private final String botUsername;
 
-    public String getBotToken() {
-        return System.getenv("WEATHERBOT_TOKEN");
+    public TelegramBot(Bot bot, String token, String username) {
+        telegramBot = bot;
+        botToken = token;
+        botUsername = username;
     }
 
-    public String getBotUsername() {
-        return System.getenv("WEATHERBOT_USERNAME");
-    }
+    public String getBotToken() { return botToken; }
+
+    public String getBotUsername() { return botUsername; }
 
     public void onUpdateReceived(Update update) {
 
