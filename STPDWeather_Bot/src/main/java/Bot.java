@@ -1,4 +1,7 @@
+import org.apache.http.client.HttpResponseException;
+
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 public class Bot {
@@ -7,6 +10,8 @@ public class Bot {
     public UserStateRepo userStateRepo;
 
     private final HashMap<String, String> commands = new HashMap<>();
+
+    private final DecimalFormat tempFormat = new DecimalFormat("0.00");
 
     public Bot(WeatherGetter wGetter, UserStateRepo uStateRepo) {
         weatherGetter = wGetter;
@@ -94,10 +99,25 @@ public class Bot {
 
         try {
             model = weatherGetter.getWeather(cityName);
+        } catch (HttpResponseException e) {
+            switch (e.getStatusCode()) {
+                case 401:
+                    return "Это мой косяк.. извиняюсь \uD83D\uDE1E";
+                case 404:
+                    return "Сервер сейчас недоступен \uD83D\uDE1E";
+                case 429:
+                    return "Лимит запросов превышен, подожди минуту \uD83D\uDE43";
+            }
+            return "Какая-то непонятная ошибка \uD83D\uDE1E, попробуй позже \uD83D\uDE43";
         } catch (IOException e) {
             return "Не знаю такого города \uD83D\uDE1E";
         }
 
-        return model.getFormatInfo();
+        return "\uD83C\uDF07 Город: " + model.getCityName() + "\n" +
+                "\uD83D\uDD06 Температура: " +
+                "по ощущениям " + tempFormat.format(model.getTempFeelsLike()) + " C°, " +
+                "по факту " + tempFormat.format(model.getTemp()) + " C°\n" +
+                "\uD83D\uDCA7 Влажность: " + model.getHumidity() + "%\n" +
+                "\uD83C\uDF43 Скорость ветра: " + model.getWindSpeed() + " м/с\n";
     }
 }

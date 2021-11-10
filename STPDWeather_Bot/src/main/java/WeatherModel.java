@@ -1,15 +1,10 @@
 public class WeatherModel {
 
-    private String formatInfo;
     private String cityName;
     private Double temp;
     private Double tempFeelsLike;
     private Double humidity;
     private Double windSpeed;
-
-    String getFormatInfo() { return formatInfo; }
-
-    void setFormatInfo(String formatInfo) { this.formatInfo = formatInfo; }
 
     String getCityName() { return cityName; }
 
