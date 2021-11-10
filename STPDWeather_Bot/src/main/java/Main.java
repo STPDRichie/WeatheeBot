@@ -18,6 +18,7 @@ public class Main {
                             new WeatherGetter(System.getenv("OPENWEATHER_API_TOKEN")),
                             new UserStateRepo(new HashMap<>(), new HashMap<>())
                     ),
+                    new BotReply(),
                     System.getenv("WEATHERBOT_TOKEN"),
                     System.getenv("WEATHERBOT_USERNAME"))
             );
@@ -45,17 +46,15 @@ TODO Замечания:
     + formatInfo → Bot. Не надо это делать в коде десериализации.
     Gson.fromJson — без ручного парсинга json-а
         Изменить десериализацию ( +1 балл )
-    Кнопки телеграмма
-    BotReply bot.getReplyToMessage(...)
-    BotReply {
-        String message;
-        KeyboardButton[] buttons;
-        // …
-        // ...
-    }
-    sendMessage(Long chatId, String text, KeyboardButton[] buttons) {
-
-    }
+    + Кнопки телеграмма
+    BotReply telegramBot.getReplyToMessage(...)
+    + BotReply {
+    +     String message;
+    +     KeyboardButton[] buttons;
+    +     // ...
+    +     // ...
+    + }
+    + sendMessage(Long chatId, String text, KeyboardButton[] buttons) {}
 
 TODO Микро:
     + Замена конкретных городов в favouriteCities

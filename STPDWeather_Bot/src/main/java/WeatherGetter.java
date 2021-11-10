@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.apache.http.client.HttpResponseException;
 
 public class WeatherGetter {
     private final String apiToken;
@@ -33,15 +32,15 @@ public class WeatherGetter {
                 "&appid=" + apiToken);
 
         Scanner scanner = new Scanner((InputStream) url.getContent());
-        StringBuilder result = new StringBuilder();
+        StringBuilder jsonContent = new StringBuilder();
         while (scanner.hasNext()) {
-            result.append(scanner.nextLine());
+            jsonContent.append(scanner.nextLine());
         }
 
-//        OpenWeatherMap openWeatherMap = jsonToMap(result.toString());
+//        OpenWeatherMap openWeatherMap = jsonToMap(jsonContent.toString());
 //        WeatherData weatherData = openWeatherMap.data.get(0);
 
-        HashMap<String, Object> respMap = jsonToMap(result.toString());
+        HashMap<String, Object> respMap = jsonToMap(jsonContent.toString());
         HashMap<String, Object> mainMap = jsonToMap(respMap.get("main").toString());
         HashMap<String, Object> windMap = jsonToMap(respMap.get("wind").toString());
 

@@ -14,11 +14,13 @@ public class TelegramBot extends TelegramLongPollingBot {
     private final Bot telegramBot;
     private final String botToken;
     private final String botUsername;
+    private final BotReply botReply;
 
-    public TelegramBot(Bot bot, String token, String username) {
+    public TelegramBot(Bot bot, BotReply reply, String token, String username) {
         telegramBot = bot;
         botToken = token;
         botUsername = username;
+        botReply = reply;
     }
 
     public String getBotToken() { return botToken; }
@@ -30,18 +32,18 @@ public class TelegramBot extends TelegramLongPollingBot {
         Message message = update.getMessage();
 
         if (message.hasText()) {
+            botReply.message = telegramBot.getReplyToMessage(message.getText(), message.getChatId());
+            botReply.keyboardRows = botReply.createKeyboard(telegramBot, message.getChatId());
 
-            String reply = telegramBot.getReplyToMessage(message.getText(), message.getChatId());
-
-            sendMessage(message.getChatId(), reply);
+            sendMessage(message.getChatId(), botReply);
         }
     }
 
-    private void sendMessage(Long chatId, String text) {
+    private void sendMessage(Long chatId, BotReply reply) {
         SendMessage sendMessage = new SendMessage()
                 .setChatId(chatId)
-                .setText(text);
-        createKeyboard(sendMessage);
+                .setText(reply.message);
+        createKeyboard(sendMessage, reply.keyboardRows);
 
         try {
             execute(sendMessage);
@@ -49,27 +51,14 @@ public class TelegramBot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
-    
-    private void createKeyboard(SendMessage sendMessage) {
+
+    private void createKeyboard(SendMessage sendMessage, ArrayList<KeyboardRow> keyboardRows) {
         ReplyKeyboardMarkup citiesKeyboard = new ReplyKeyboardMarkup();
         sendMessage.setReplyMarkup(citiesKeyboard);
 
         citiesKeyboard.setSelective(true);
         citiesKeyboard.setResizeKeyboard(true);
         citiesKeyboard.setOneTimeKeyboard(false);
-
-        ArrayList<KeyboardRow> keyboardRows = new ArrayList<>();
-        KeyboardRow row1 = new KeyboardRow();
-        KeyboardRow row2 = new KeyboardRow();
-
-        String[] cities = telegramBot.userStateRepo.getFavouriteCities(sendMessage.getChatId());
-        row1.add(cities[0]);
-        row1.add(cities[1]);
-        row2.add(cities[2]);
-        row2.add(cities[3]);
-
-        keyboardRows.add(row1);
-        keyboardRows.add(row2);
 
         citiesKeyboard.setKeyboard(keyboardRows);
     }

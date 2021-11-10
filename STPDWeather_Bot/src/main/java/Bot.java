@@ -52,18 +52,17 @@ public class Bot {
 
         if (userStateRepo.lastMessage.get(chatId.toString()).equals("/my_favourite_cities")) {
             String[] cities = userStateRepo.getFavouriteCities(chatId.toString());
-            return "\uD83C\uDF07 Твои избранные города: " + "\n" +
-                    "1. " + cities[0] + "\n" + "2. " + cities[1] + "\n" +
-                    "3. " + cities[2] + "\n" + "4. " + cities[3];
+            StringBuilder response = new StringBuilder("\uD83C\uDF07 Твои избранные города: ");
+            for (int i = 0; i < 4; i++) {
+                response.append("\n").append(i + 1).append(". ").append(cities[i]);
+            }
+            return response.toString();
         }
-
 
         if (text.indexOf('/') == 0) {
             return getReplyToCommand(text);
-        } else {
-            return getWeather(text);
         }
-
+        return getWeather(text);
     }
 
     public static String[] parseCitiesSettingText(String[] cities, String text) {
