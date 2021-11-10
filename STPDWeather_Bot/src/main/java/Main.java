@@ -15,7 +15,7 @@ public class Main {
         try {
             botsApi.registerBot(new TelegramBot(
                     new Bot(
-                            new WeatherGetter(),
+                            new WeatherGetter(System.getenv("OPENWEATHER_API_TOKEN")),
                             new UserStateRepo(new HashMap<>(), new HashMap<>())
                     ),
                     System.getenv("WEATHERBOT_TOKEN"),
@@ -35,16 +35,16 @@ TODO Замечания:
     + Свой класс для всего состояния пользователя: favouriteCities и lastMessages
     + Weather -> ???
     +     String[] -> Класс
-    Изменить десериализацию ( +1 балл )
-    Все зависимости собирать в main. В том числе все параметры из Env собирать в main и передавать в конструкторы.
-	    Токен передавать в конструктор WeatherGetter
-    UserStateRepo chatId string или long? Определитесь :)
-    getCities → favourite
-    Убрать парсинг текста из UserStateRepo
+    + Все зависимости собирать в main. В том числе все параметры из Env собирать в main и передавать в конструкторы.
+	+     Токен передавать в конструктор WeatherGetter
+    + UserStateRepo chatId string или long? Определитесь :)
+    + getCities → favourite
+    + Убрать парсинг текста из UserStateRepo
     Сообщения об ошибках могут обманывать
     Обработка исключений при получении из API
     formatInfo → Bot. Не надо это делать в коде десериализации.
     Gson.fromJson — без ручного парсинга json-а
+        Изменить десериализацию ( +1 балл )
     Кнопки телеграмма
     BotReply bot.getReplyToMessage(...)
     BotReply {
@@ -56,7 +56,6 @@ TODO Замечания:
     sendMessage(Long chatId, String text, KeyboardButton[] buttons) {
 
     }
-
 
 TODO Микро:
     + Замена конкретных городов в favouriteCities

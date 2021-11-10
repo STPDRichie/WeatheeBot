@@ -17,7 +17,7 @@ public class UserStateRepo {
             "Пермь",
     };
 
-    String[] getCities(String chatId) {
+    String[] getFavouriteCities(String chatId) {
         if (favouriteCities.containsKey(chatId)) {
             return favouriteCities.get(chatId);
         }
@@ -25,17 +25,13 @@ public class UserStateRepo {
         return defaultCities;
     }
 
-    Boolean setCities(String text, String chatId) {
+    Boolean setFavouriteCities(String text, String chatId) {
         String[] cities = favouriteCities.getOrDefault(chatId, defaultCities);
+        cities = Bot.parseCitiesSettingText(cities, text);
 
-        String[] pairs = text.split("\\s?\\n\\s?");
-        if (pairs.length > 4) {
+        if (cities == null)
             return false;
-        }
 
-        for (String pair : pairs) {
-            cities[Integer.parseInt(pair.split(". ")[0]) - 1] = pair.split(". ")[1];
-        }
         favouriteCities.put(chatId, cities);
 
         return true;

@@ -61,7 +61,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         KeyboardRow row1 = new KeyboardRow();
         KeyboardRow row2 = new KeyboardRow();
 
-        String[] cities = telegramBot.userStateRepo.getCities(sendMessage.getChatId());
+        String[] cities = telegramBot.userStateRepo.getFavouriteCities(sendMessage.getChatId());
         row1.add(cities[0]);
         row1.add(cities[1]);
         row2.add(cities[2]);

@@ -19,8 +19,8 @@ public class Bot {
                 "Привет! \u270B Я STPDWeatherBot \u2601" + "\n" +
                         "Напиши название города, и я покажу погоду в нём!" + "\n" +
                         "Также ты можешь сохранить четыре избранных города командой " + "/set_favourite_cities" + "\n" +
-                        "Ещё можешь вывести список этих городов командой " + "/my_cities");
-        commands.put("/my_cities",
+                        "Ещё можешь вывести список этих городов командой " + "/my_favourite_cities");
+        commands.put("/my_favourite_cities",
                 "Секундочку...");
         commands.put("/set_favourite_cities",
                 "Напиши названия четырёх избранных городов" + "\n" +
@@ -37,17 +37,16 @@ public class Bot {
 
         if (Character.isDigit(text.charAt(0)) &&
                 userStateRepo.lastMessage.get(chatId.toString()).equals("/set_favourite_cities")) {
-            if (userStateRepo.setCities(text, chatId.toString())) {
+            if (userStateRepo.setFavouriteCities(text, chatId.toString())) {
                 return "Список успешно изменён \uD83D\uDC4D";
-            } else {
-                return "Дальше четвёртого города нельзя... \uD83D\uDE12";
             }
+            return "Ошибка произошла... \uD83D\uDE22";
         }
 
         userStateRepo.lastMessage.put(chatId.toString(), text);
 
-        if (userStateRepo.lastMessage.get(chatId.toString()).equals("/my_cities")) {
-            String[] cities = userStateRepo.getCities(chatId.toString());
+        if (userStateRepo.lastMessage.get(chatId.toString()).equals("/my_favourite_cities")) {
+            String[] cities = userStateRepo.getFavouriteCities(chatId.toString());
             return "\uD83C\uDF07 Твои избранные города: " + "\n" +
                     "1. " + cities[0] + "\n" + "2. " + cities[1] + "\n" +
                     "3. " + cities[2] + "\n" + "4. " + cities[3];
@@ -60,6 +59,18 @@ public class Bot {
             return getWeather(text);
         }
 
+    }
+
+    public static String[] parseCitiesSettingText(String[] cities, String text) {
+        String[] pairs = text.split("\\s?\\n\\s?");
+        if (pairs.length > 4) {
+            return null;
+        }
+
+        for (String pair : pairs) {
+            cities[Integer.parseInt(pair.split(". ")[0]) - 1] = pair.split(". ")[1];
+        }
+        return cities;
     }
 
     public String getReplyToCommand(String commandText) {
