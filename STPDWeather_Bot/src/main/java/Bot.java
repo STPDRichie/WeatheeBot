@@ -27,7 +27,7 @@ public class Bot {
                         "Также ты можешь сохранить четыре избранных города командой " + "/set_favourite_cities" + "\n" +
                         "Ещё можешь вывести список этих городов командой " + "/my_favourite_cities");
         commands.put("/my_favourite_cities",
-                "sss");
+                "'/my_favourite_cities' request");
         commands.put("/set_favourite_cities",
                 "Напиши названия четырёх избранных городов" + "\n" +
                         "\u270D Формат такой:" + "\n" +
@@ -41,7 +41,6 @@ public class Bot {
 
     public BotReply getReplyToMessage(String text, String chatId) {
         UserState userState = userStateRepo.getUserState(chatId);
-        userStateRepo.putLastMessage(chatId, text);
         String message;
 
         if (userState.dialogState == DialogState.SettingFavouriteCities) {
@@ -57,40 +56,23 @@ public class Bot {
 
         if (text.indexOf('/') == 0) {
             message = getReplyToCommand(text, chatId);
+
+            if (userState.dialogState == DialogState.WaitFavouriteCities) {
+                String[] cities = userStateRepo.getFavouriteCities(chatId);
+                StringBuilder response = new StringBuilder("\uD83C\uDF07 Твои избранные города: ");
+                for (int i = 0; i < 4; i++) {
+                    response.append("\n").append(i + 1).append(". ").append(cities[i]);
+                }
+                message = response.toString();
+
+                userState.dialogState = DialogState.Default;
+            }
         } else {
             message = getWeather(text);
         }
 
-        if (userState.dialogState == DialogState.WaitFavouriteCities) {
-            String[] cities = userStateRepo.getFavouriteCities(chatId);
-            StringBuilder response = new StringBuilder("\uD83C\uDF07 Твои избранные города: ");
-            for (int i = 0; i < 4; i++) {
-                response.append("\n").append(i + 1).append(". ").append(cities[i]);
-            }
-            message = response.toString();
-
-            userState.dialogState = DialogState.Default;
-            userStateRepo.setUserState(chatId, userState);
-
-            return new BotReply(message, createKeyboard(chatId));
-        }
         userStateRepo.setUserState(chatId, userState);
         return new BotReply(message, createKeyboard(chatId));
-    }
-
-    public static String[] parseCitiesSettingText(String[] cities, String text) {
-        String[] pairs = text.split("\\s?\\n\\s?");
-        if (pairs.length > 4) {
-            return null;
-        }
-
-        for (String pair : pairs) {
-            if (pair.split(". ").length == 1) {
-                return null;
-            }
-            cities[Integer.parseInt(pair.split(". ")[0]) - 1] = pair.split(". ")[1];
-        }
-        return cities;
     }
 
     public String getReplyToCommand(String commandText, String chatId) {
@@ -141,6 +123,21 @@ public class Bot {
                 "\uD83C\uDF43 Скорость ветра: " + model.getWindSpeed() + " м/с\n";
     }
 
+    public static String[] parseCitiesSettingText(String[] cities, String text) {
+        String[] pairs = text.split("\\s?\\n\\s?");
+        if (pairs.length > 4) {
+            return null;
+        }
+
+        for (String pair : pairs) {
+            if (pair.split(". ").length == 1) {
+                return null;
+            }
+            cities[Integer.parseInt(pair.split(". ")[0]) - 1] = pair.split(". ")[1];
+        }
+        return cities;
+    }
+
     public ArrayList<ArrayList<String>> createKeyboard(String... chatId) {
 
         ArrayList<ArrayList<String>> keyboard = new ArrayList<>();
@@ -151,6 +148,7 @@ public class Bot {
         if (chatId.length > 0) {
             cities = userStateRepo.getFavouriteCities(chatId[0]);
         }
+
         row1.add(cities[0]);
         row1.add(cities[1]);
         row2.add(cities[2]);

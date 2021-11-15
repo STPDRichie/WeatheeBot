@@ -1,7 +1,6 @@
 import java.util.HashMap;
 
 public class UserStateRepo {
-    private final HashMap<String, String> lastMessages = new HashMap<>();
     private final HashMap<String, UserState> userStates = new HashMap<>();
 
     String[] getFavouriteCities(String chatId) {
@@ -18,14 +17,6 @@ public class UserStateRepo {
         userStates.put(chatId, new UserState(cities));
 
         return true;
-    }
-
-    String getLastMessage(String chatId) {
-        return lastMessages.get(chatId);
-    }
-
-    void putLastMessage(String chatId, String message) {
-        lastMessages.put(chatId, message);
     }
 
     UserState getUserState(String chatId) {

@@ -8,10 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/BotReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BotReply.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DialogState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DialogState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelegramBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UserState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/UserStateRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserStateRepo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

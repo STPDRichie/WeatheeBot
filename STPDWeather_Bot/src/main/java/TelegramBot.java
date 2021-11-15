@@ -51,8 +51,13 @@ public class TelegramBot extends TelegramLongPollingBot {
     private void createKeyboard(SendMessage sendMessage, ArrayList<ArrayList<String>> keyboard) {
         ArrayList<KeyboardRow> keyboardRows = new ArrayList<>();
 
-
-
+        for (ArrayList<String> row : keyboard) {
+            KeyboardRow keyboardRow = new KeyboardRow();
+            for (String city : row) {
+                keyboardRow.add(city);
+            }
+            keyboardRows.add(keyboardRow);
+        }
 
         ReplyKeyboardMarkup citiesKeyboard = new ReplyKeyboardMarkup();
         sendMessage.setReplyMarkup(citiesKeyboard);

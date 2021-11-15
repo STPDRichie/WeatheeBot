@@ -28,29 +28,10 @@ public class Main {
 
 /*
 TODO Замечания:
-    + UserState -> UserStateRepo
-    + Убрать из Bot и UserStateRepo завязку на Telegram
-    + Свой класс для всего состояния пользователя: favouriteCities и lastMessages
-    + Weather -> ???
-    +     String[] -> Класс
-    + Все зависимости собирать в main. В том числе все параметры из Env собирать в main и передавать в конструкторы.
-	+     Токен передавать в конструктор WeatherGetter
-    + UserStateRepo chatId string или long? Определитесь :)
-    + getCities → favourite
-    + Убрать парсинг текста из UserStateRepo
-    + Сообщения об ошибках могут обманывать
-    + Обработка исключений при получении из API
-    + formatInfo → Bot. Не надо это делать в коде десериализации.
-    + Кнопки телеграмма
-    + BotReply telegramBot.getReplyToMessage(...)
-    + BotReply {
-    +     String message;
-    +     KeyboardButton[] buttons;
-    +     // ...
-    +     // ...
-    + }
-    + sendMessage(Long chatId, String text, KeyboardButton[] buttons) {}
-    lastMessage → DialogState - enum
+    + lastMessage → DialogState - enum
+    + Userrepo.setFavCities → UserState
+    + DialogState
+    + Кнопки?
     Gson.fromJson — без ручного парсинга json-а
         Изменить десериализацию ( +1 балл )
 
