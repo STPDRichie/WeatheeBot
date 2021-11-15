@@ -14,8 +14,7 @@ public class Main {
             botsApi.registerBot(new TelegramBot(
                     new Bot(
                             new WeatherGetter(System.getenv("OPENWEATHER_API_TOKEN")),
-                            new UserStateRepo(),
-                            new BotReply()
+                            new UserStateRepo()
                     ),
                     System.getenv("WEATHERBOT_TOKEN"),
                     System.getenv("WEATHERBOT_USERNAME"))

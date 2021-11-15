@@ -2,32 +2,20 @@ import java.util.HashMap;
 
 public class UserStateRepo {
     private final HashMap<String, String> lastMessages = new HashMap<>();
-    private final HashMap<String, String[]> favouriteCities = new HashMap<>();
     private final HashMap<String, UserState> userStates = new HashMap<>();
 
-    public final String[] defaultCities = new String[] {
-            "Екатеринбург",
-            "Челябинск",
-            "Нижний Тагил",
-            "Пермь",
-    };
-
     String[] getFavouriteCities(String chatId) {
-        if (favouriteCities.containsKey(chatId)) {
-            return favouriteCities.get(chatId);
-        }
-
-        return defaultCities;
+        return userStates.getOrDefault(chatId, new UserState()).favouriteCities;
     }
 
-    Boolean setFavouriteCities(String text, String chatId) {
-        String[] cities = favouriteCities.getOrDefault(chatId, defaultCities);
+    Boolean IsFavouriteCitiesSetted(String text, String chatId) {
+        String[] cities = userStates.getOrDefault(chatId, new UserState()).favouriteCities;
         cities = Bot.parseCitiesSettingText(cities, text);
 
         if (cities == null)
             return false;
 
-        favouriteCities.put(chatId, cities);
+        userStates.put(chatId, new UserState(cities));
 
         return true;
     }
@@ -42,5 +30,13 @@ public class UserStateRepo {
 
     UserState getUserState(String chatId) {
         return userStates.getOrDefault(chatId, new UserState());
+    }
+
+    void setUserState(String chatId, UserState userState) {
+        userStates.put(chatId, userState);
+    }
+
+    void setDialogState(String chatId, DialogState dialogState) {
+        userStates.get(chatId).dialogState = dialogState;
     }
 }

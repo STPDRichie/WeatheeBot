@@ -2,23 +2,21 @@ import org.apache.http.client.HttpResponseException;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Bot {
 
     private final WeatherGetter weatherGetter;
-    public UserStateRepo userStateRepo;
-    private final BotReply botReply;
+    private final UserStateRepo userStateRepo;
 
     private final HashMap<String, String> commands = new HashMap<>();
 
     private final DecimalFormat tempFormat = new DecimalFormat("0.00");
 
-    public Bot(WeatherGetter wGetter, UserStateRepo repo, BotReply reply) {
+    public Bot(WeatherGetter wGetter, UserStateRepo repo) {
         weatherGetter = wGetter;
         userStateRepo = repo;
-        botReply = reply;
-        botReply.keyboardRows = botReply.createKeyboard(userStateRepo);
 
         commands.put("/start",
                 "Введи название города, в котором хочешь узнать погоду" + "\n" +
@@ -29,7 +27,7 @@ public class Bot {
                         "Также ты можешь сохранить четыре избранных города командой " + "/set_favourite_cities" + "\n" +
                         "Ещё можешь вывести список этих городов командой " + "/my_favourite_cities");
         commands.put("/my_favourite_cities",
-                "Секундочку...");
+                "sss");
         commands.put("/set_favourite_cities",
                 "Напиши названия четырёх избранных городов" + "\n" +
                         "\u270D Формат такой:" + "\n" +
@@ -41,38 +39,43 @@ public class Bot {
                         "Пиши правильно \u261D \uD83D\uDE43");
     }
 
-    public BotReply getReplyToMessage(String text, Long chatId) {
-//         возвращать каждый раз новый botReply
-        UserState userState = userStateRepo.getUserState(chatId.toString());
-        if (userState.dialogState == DialogState.WaitFavouriteCities) {
-//            if (Character.isDigit(text.charAt(0)) &&
-//                userStateRepo.lastMessage.get(chatId.toString()).equals("/set_favourite_cities")) {
-            if (userStateRepo.setFavouriteCities(text, chatId.toString())) {
-                botReply.message = "Список успешно изменён \uD83D\uDC4D";
-            } else {
-                botReply.message = "Ошибка произошла... \uD83D\uDE22";
+    public BotReply getReplyToMessage(String text, String chatId) {
+        UserState userState = userStateRepo.getUserState(chatId);
+        userStateRepo.putLastMessage(chatId, text);
+        String message;
+
+        if (userState.dialogState == DialogState.SettingFavouriteCities) {
+            message = "Ошибка произошла... \uD83D\uDE22";
+            if (userStateRepo.IsFavouriteCitiesSetted(text, chatId)) {
+                message = "Список успешно изменён \uD83D\uDC4D";
             }
-            botReply.keyboardRows = botReply.createKeyboard(userStateRepo, chatId);
-            return botReply;
+            userState.dialogState = DialogState.Default;
+            userStateRepo.setUserState(chatId, userState);
+
+            return new BotReply(message, createKeyboard(chatId));
         }
 
-        userStateRepo.putLastMessage(chatId.toString(), text);
-        if (userStateRepo.getLastMessage(chatId.toString()).equals("/my_favourite_cities")) {
-            String[] cities = userStateRepo.getFavouriteCities(chatId.toString());
+        if (text.indexOf('/') == 0) {
+            message = getReplyToCommand(text, chatId);
+        } else {
+            message = getWeather(text);
+        }
+
+        if (userState.dialogState == DialogState.WaitFavouriteCities) {
+            String[] cities = userStateRepo.getFavouriteCities(chatId);
             StringBuilder response = new StringBuilder("\uD83C\uDF07 Твои избранные города: ");
             for (int i = 0; i < 4; i++) {
                 response.append("\n").append(i + 1).append(". ").append(cities[i]);
             }
-            botReply.message = response.toString();
-            return botReply;
-        }
+            message = response.toString();
 
-        if (text.indexOf('/') == 0) {
-            botReply.message = getReplyToCommand(text);
-        } else {
-            botReply.message = getWeather(text);
+            userState.dialogState = DialogState.Default;
+            userStateRepo.setUserState(chatId, userState);
+
+            return new BotReply(message, createKeyboard(chatId));
         }
-        return botReply;
+        userStateRepo.setUserState(chatId, userState);
+        return new BotReply(message, createKeyboard(chatId));
     }
 
     public static String[] parseCitiesSettingText(String[] cities, String text) {
@@ -90,10 +93,15 @@ public class Bot {
         return cities;
     }
 
-    public String getReplyToCommand(String commandText) {
+    public String getReplyToCommand(String commandText, String chatId) {
         StringBuilder reply;
 
         if (commands.containsKey(commandText)) {
+            if (commandText.equals("/set_favourite_cities")) {
+                userStateRepo.setDialogState(chatId, DialogState.SettingFavouriteCities);
+            } else if (commandText.equals("/my_favourite_cities")) {
+                userStateRepo.setDialogState(chatId, DialogState.WaitFavouriteCities);
+            }
             reply = new StringBuilder(commands.get(commandText));
         } else {
             reply = new StringBuilder("Не знаю такой команды... \uD83D\uDE22" + "\n\n" +
@@ -131,5 +139,26 @@ public class Bot {
                 "по факту " + tempFormat.format(model.getTemp()) + " C°\n" +
                 "\uD83D\uDCA7 Влажность: " + model.getHumidity() + "%\n" +
                 "\uD83C\uDF43 Скорость ветра: " + model.getWindSpeed() + " м/с\n";
+    }
+
+    public ArrayList<ArrayList<String>> createKeyboard(String... chatId) {
+
+        ArrayList<ArrayList<String>> keyboard = new ArrayList<>();
+        ArrayList<String> row1 = new ArrayList<>();
+        ArrayList<String> row2 = new ArrayList<>();
+
+        String[] cities = new UserState().defaultCities;
+        if (chatId.length > 0) {
+            cities = userStateRepo.getFavouriteCities(chatId[0]);
+        }
+        row1.add(cities[0]);
+        row1.add(cities[1]);
+        row2.add(cities[2]);
+        row2.add(cities[3]);
+
+        keyboard.add(row1);
+        keyboard.add(row2);
+
+        return keyboard;
     }
 }

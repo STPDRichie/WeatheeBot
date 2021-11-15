@@ -29,9 +29,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         Message message = update.getMessage();
 
         if (message.hasText()) {
-            BotReply botReply = telegramBot.getReplyToMessage(message.getText(), message.getChatId());
-//            botReply.message = telegramBot.getReplyToMessage(message.getText(), message.getChatId());
-//            botReply.keyboardRows = botReply.createKeyboard(telegramBot, message.getChatId());
+            BotReply botReply = telegramBot.getReplyToMessage(message.getText(), message.getChatId().toString());
 
             sendMessage(message.getChatId(), botReply);
         }
@@ -41,7 +39,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         SendMessage sendMessage = new SendMessage()
                 .setChatId(chatId)
                 .setText(reply.message);
-        createKeyboard(sendMessage, reply.keyboardRows);
+        createKeyboard(sendMessage, reply.keyboard);
 
         try {
             execute(sendMessage);
@@ -50,7 +48,12 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void createKeyboard(SendMessage sendMessage, ArrayList<KeyboardRow> keyboardRows) {
+    private void createKeyboard(SendMessage sendMessage, ArrayList<ArrayList<String>> keyboard) {
+        ArrayList<KeyboardRow> keyboardRows = new ArrayList<>();
+
+
+
+
         ReplyKeyboardMarkup citiesKeyboard = new ReplyKeyboardMarkup();
         sendMessage.setReplyMarkup(citiesKeyboard);
 
