@@ -42,11 +42,11 @@ public class Bot {
     }
 
     public BotReply getReplyToMessage(String text, Long chatId) {
-        // возвращать каждый раз новый botReply
-        UserState userState = userStateRepo.get(chatId.toString());
-        if (userState.dialogState == DialogState.WaitFavCities)
-            //if (Character.isDigit(text.charAt(0)) &&
-              //  userStateRepo.lastMessage.get(chatId.toString()).equals("/set_favourite_cities")) {
+//         возвращать каждый раз новый botReply
+        UserState userState = userStateRepo.getUserState(chatId.toString());
+        if (userState.dialogState == DialogState.WaitFavouriteCities) {
+//            if (Character.isDigit(text.charAt(0)) &&
+//                userStateRepo.lastMessage.get(chatId.toString()).equals("/set_favourite_cities")) {
             if (userStateRepo.setFavouriteCities(text, chatId.toString())) {
                 botReply.message = "Список успешно изменён \uD83D\uDC4D";
             } else {
@@ -56,8 +56,8 @@ public class Bot {
             return botReply;
         }
 
-        userStateRepo.lastMessage.put(chatId.toString(), text);
-        if (userStateRepo.lastMessage.get(chatId.toString()).equals("/my_favourite_cities")) {
+        userStateRepo.putLastMessage(chatId.toString(), text);
+        if (userStateRepo.getLastMessage(chatId.toString()).equals("/my_favourite_cities")) {
             String[] cities = userStateRepo.getFavouriteCities(chatId.toString());
             StringBuilder response = new StringBuilder("\uD83C\uDF07 Твои избранные города: ");
             for (int i = 0; i < 4; i++) {

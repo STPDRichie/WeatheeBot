@@ -1,16 +1,9 @@
 import java.util.HashMap;
 
-public class UserState {
-    String chatId;
-    String[] favCities;
-    DialogState dialogState;
-}
-
 public class UserStateRepo {
-
-
-    public final HashMap<String, String> lastMessage = new HashMap<>();
+    private final HashMap<String, String> lastMessages = new HashMap<>();
     private final HashMap<String, String[]> favouriteCities = new HashMap<>();
+    private final HashMap<String, UserState> userStates = new HashMap<>();
 
     public final String[] defaultCities = new String[] {
             "Екатеринбург",
@@ -37,5 +30,17 @@ public class UserStateRepo {
         favouriteCities.put(chatId, cities);
 
         return true;
+    }
+
+    String getLastMessage(String chatId) {
+        return lastMessages.get(chatId);
+    }
+
+    void putLastMessage(String chatId, String message) {
+        lastMessages.put(chatId, message);
+    }
+
+    UserState getUserState(String chatId) {
+        return userStates.getOrDefault(chatId, new UserState());
     }
 }

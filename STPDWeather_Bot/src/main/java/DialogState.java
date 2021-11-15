@@ -1,5 +1,5 @@
 public enum DialogState {
     Default,
-    WaitFavCities,
+    WaitFavouriteCities,
     //...
 }
