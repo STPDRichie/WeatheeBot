@@ -2,8 +2,6 @@ import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.HashMap;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -16,7 +14,7 @@ public class Main {
             botsApi.registerBot(new TelegramBot(
                     new Bot(
                             new WeatherGetter(System.getenv("OPENWEATHER_API_TOKEN")),
-                            new UserStateRepo(new HashMap<>(), new HashMap<>()),
+                            new UserStateRepo(),
                             new BotReply()
                     ),
                     System.getenv("WEATHERBOT_TOKEN"),

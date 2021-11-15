@@ -6,6 +6,8 @@ public class BotReply {
     String message;
     ArrayList<KeyboardRow> keyboardRows;
 
+    // отвязать от телеграмма, сделав свой KeynboardRow
+    // перенести это в Bot
     public ArrayList<KeyboardRow> createKeyboard(UserStateRepo userStateRepo, Long... chatId) {
 
         keyboardRows = new ArrayList<>();
