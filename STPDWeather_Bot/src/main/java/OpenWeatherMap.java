@@ -1,19 +1,17 @@
-import java.util.List;
-
 public class OpenWeatherMap {
-    public Coordinates coord;
-    public List<Weather> weather;
-    public String base;
+//    public Coordinates coord;
+//    public List<Weather> weather;
+//    public String base;
     public MainInfo main;
-    public int visibility;
+//    public int visibility;
     public Wind wind;
-    public Clouds clouds;
-    public int dt;
-    public Sys sys;
-    public int timezone;
-    public int id;
+//    public Clouds clouds;
+//    public int dt;
+//    public Sys sys;
+//    public int timezone;
+//    public int id;
     public String name;
-    public int cod;
+//    public int cod;
 }
 
 class Coordinates {
@@ -31,9 +29,9 @@ class Weather {
 class MainInfo {
     public double temp;
     public double feels_like;
-    public double temp_min;
-    public double temp_max;
-    public double pressure;
+//    public double temp_min;
+//    public double temp_max;
+//    public double pressure;
     public double humidity;
 }
 

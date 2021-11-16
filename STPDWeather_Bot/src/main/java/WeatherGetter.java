@@ -20,7 +20,8 @@ public class WeatherGetter {
                 "q=" + city +
                 "&units=" + "metric" +
                 "&lang=" + "ru" +
-                "&appid=" + apiToken);
+                "&appid=" + apiToken
+        );
 
         JSONObject jsonContent = new JSONObject(IOUtils.toString(url, StandardCharsets.UTF_8));
 
