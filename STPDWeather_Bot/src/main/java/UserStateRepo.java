@@ -7,14 +7,11 @@ public class UserStateRepo {
         return userStates.getOrDefault(chatId, new UserState()).favouriteCities;
     }
 
-    Boolean IsFavouriteCitiesSetted(String text, String chatId) {
-        String[] cities = userStates.getOrDefault(chatId, new UserState()).favouriteCities;
-        cities = Bot.parseCitiesSettingText(cities, text);
-
-        if (cities == null)
+    Boolean IsFavouriteCitiesSetted(String[] newCities, String chatId) {
+        if (newCities == null)
             return false;
 
-        userStates.put(chatId, new UserState(cities));
+        userStates.put(chatId, new UserState(newCities));
 
         return true;
     }

@@ -44,9 +44,12 @@ public class Bot {
         String message;
 
         if (userState.dialogState == DialogState.SettingFavouriteCities) {
-            message = "Ошибка произошла... \uD83D\uDE22";
-            if (userStateRepo.IsFavouriteCitiesSetted(text, chatId)) {
+            if (userStateRepo.IsFavouriteCitiesSetted(
+                    parseCitiesSettingText(userStateRepo.getFavouriteCities(chatId), text),
+                    chatId)) {
                 message = "Список успешно изменён \uD83D\uDC4D";
+            } else {
+                message = "Ошибка произошла... \uD83D\uDE22";
             }
             userState.dialogState = DialogState.Default;
             userStateRepo.setUserState(chatId, userState);
@@ -123,19 +126,20 @@ public class Bot {
                 "\uD83C\uDF43 Скорость ветра: " + model.getWindSpeed() + " м/с\n";
     }
 
-    public static String[] parseCitiesSettingText(String[] cities, String text) {
-        String[] pairs = text.split("\\s?\\n\\s?");
-        if (pairs.length > 4) {
+    public static String[] parseCitiesSettingText(String[] currentCities, String newCitiesText) {
+        String[] citiesWithNumbers = newCitiesText.split("\\s?\\n\\s?");
+        if (citiesWithNumbers.length > 4) {
             return null;
         }
 
-        for (String pair : pairs) {
-            if (pair.split(". ").length == 1) {
+        for (String cityWithNumber : citiesWithNumbers) {
+            if (cityWithNumber.split(". ").length == 1) {
                 return null;
             }
-            cities[Integer.parseInt(pair.split(". ")[0]) - 1] = pair.split(". ")[1];
+            currentCities[Integer.parseInt(cityWithNumber.split(". ")[0]) - 1]
+                    = cityWithNumber.split(". ")[1];
         }
-        return cities;
+        return currentCities;
     }
 
     public ArrayList<ArrayList<String>> createKeyboard(String... chatId) {
