@@ -43,24 +43,10 @@ public class Bot {
         UserState userState = userStateRepo.getUserState(chatId);
         String message;
 
-        if (userState.dialogState == DialogState.SettingFavouriteCities) {
-            if (userStateRepo.IsFavouriteCitiesSetted(
-                    parseCitiesSettingText(userStateRepo.getFavouriteCities(chatId), text),
-                    chatId)) {
-                message = "Список успешно изменён \uD83D\uDC4D";
-            } else {
-                message = "Ошибка произошла... \uD83D\uDE22";
-            }
-            userState.dialogState = DialogState.Default;
-            userStateRepo.setUserState(chatId, userState);
-
-            return new BotReply(message, createKeyboard(chatId));
-        }
-
         if (text.indexOf('/') == 0) {
             message = getReplyToCommand(text, chatId);
 
-            if (userState.dialogState == DialogState.WaitFavouriteCities) {
+            if (userState.dialogState == DialogState.WaitingFavouriteCities) {
                 String[] cities = userStateRepo.getFavouriteCities(chatId);
                 StringBuilder response = new StringBuilder("\uD83C\uDF07 Твои избранные города: ");
                 for (int i = 0; i < 4; i++) {
@@ -70,6 +56,18 @@ public class Bot {
 
                 userState.dialogState = DialogState.Default;
             }
+        } else if (userState.dialogState == DialogState.SettingFavouriteCities) {
+                if (userStateRepo.IsFavouriteCitiesSetted(
+                        parseCitiesSettingText(userStateRepo.getFavouriteCities(chatId), text),
+                        chatId)) {
+                    message = "Список успешно изменён \uD83D\uDC4D";
+                } else {
+                    message = "Ошибка произошла... \uD83D\uDE22";
+                }
+                userState.dialogState = DialogState.Default;
+                userStateRepo.setUserState(chatId, userState);
+
+                return new BotReply(message, createKeyboard(chatId));
         } else {
             message = getWeather(text);
         }
@@ -85,7 +83,7 @@ public class Bot {
             if (commandText.equals("/set_favourite_cities")) {
                 userStateRepo.setDialogState(chatId, DialogState.SettingFavouriteCities);
             } else if (commandText.equals("/my_favourite_cities")) {
-                userStateRepo.setDialogState(chatId, DialogState.WaitFavouriteCities);
+                userStateRepo.setDialogState(chatId, DialogState.WaitingFavouriteCities);
             }
             reply = new StringBuilder(commands.get(commandText));
         } else {
