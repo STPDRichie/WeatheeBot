@@ -1,9 +1,10 @@
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
 
 import com.google.gson.Gson;
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
 
 public class WeatherGetter {
     private final String apiToken;
@@ -21,14 +22,9 @@ public class WeatherGetter {
                 "&lang=" + "ru" +
                 "&appid=" + apiToken);
 
-        Scanner scanner = new Scanner((InputStream) url.getContent());
-        StringBuilder jsonContent = new StringBuilder();
-        while (scanner.hasNext()) {
-            jsonContent.append(scanner.nextLine());
-        }
-        String content = jsonContent.toString();
+        JSONObject jsonContent = new JSONObject(IOUtils.toString(url, StandardCharsets.UTF_8));
 
-        OpenWeatherMap weatherMap = new Gson().fromJson(content, OpenWeatherMap.class);
+        OpenWeatherMap weatherMap = new Gson().fromJson(jsonContent.toString(), OpenWeatherMap.class);
 
         model.setCityName(weatherMap.name);
         model.setTemp(weatherMap.main.temp);
