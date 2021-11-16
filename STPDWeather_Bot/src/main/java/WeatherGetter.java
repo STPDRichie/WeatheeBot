@@ -2,10 +2,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
-import java.util.HashMap;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class WeatherGetter {
     private final String apiToken;
@@ -13,14 +11,6 @@ public class WeatherGetter {
     public WeatherGetter(String token) {
         apiToken = token;
     }
-
-    public HashMap<String, Object> jsonToMap(String weatherContent) {
-        return new Gson().fromJson(weatherContent, new TypeToken<HashMap<String, Object>>(){}.getType());
-    }
-
-//    public OpenWeatherMap jsonToMap(String weatherContent) {
-//        return new Gson().fromJson(weatherContent, new TypeToken<OpenWeatherMap>(){}.getType());
-//    }
 
     public WeatherModel getWeather(String city) throws IOException {
         WeatherModel model = new WeatherModel();
@@ -36,19 +26,15 @@ public class WeatherGetter {
         while (scanner.hasNext()) {
             jsonContent.append(scanner.nextLine());
         }
+        String content = jsonContent.toString();
 
-//        OpenWeatherMap openWeatherMap = jsonToMap(jsonContent.toString());
-//        WeatherData weatherData = openWeatherMap.data.get(0);
+        OpenWeatherMap weatherMap = new Gson().fromJson(content, OpenWeatherMap.class);
 
-        HashMap<String, Object> respMap = jsonToMap(jsonContent.toString());
-        HashMap<String, Object> mainMap = jsonToMap(respMap.get("main").toString());
-        HashMap<String, Object> windMap = jsonToMap(respMap.get("wind").toString());
-
-        model.setCityName((String) respMap.get("name"));
-        model.setTemp((double) mainMap.get("temp"));
-        model.setTempFeelsLike((double) mainMap.get("feels_like"));
-        model.setHumidity((double) mainMap.get("humidity"));
-        model.setWindSpeed((double) windMap.get("speed"));
+        model.setCityName(weatherMap.name);
+        model.setTemp(weatherMap.main.temp);
+        model.setTempFeelsLike(weatherMap.main.feels_like);
+        model.setHumidity(weatherMap.main.humidity);
+        model.setWindSpeed(weatherMap.wind.speed);
 
         return model;
     }

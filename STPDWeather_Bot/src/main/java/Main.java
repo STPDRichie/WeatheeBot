@@ -32,8 +32,8 @@ TODO Замечания:
     + Userrepo.setFavCities → UserState
     + DialogState
     + Кнопки?
-    Gson.fromJson — без ручного парсинга json-а
-        Изменить десериализацию ( +1 балл )
+    + Gson.fromJson — без ручного парсинга json-а
+    +     Изменить десериализацию ( +1 балл )
 
 TODO Микро:
     + Замена конкретных городов в favouriteCities

@@ -1,14 +1,10 @@
 import java.util.List;
 
 public class OpenWeatherMap {
-    public List<WeatherData> data;
-}
-
-class WeatherData {
     public Coordinates coord;
-    public Weather[] weather;
+    public List<Weather> weather;
     public String base;
-    public MainInfo mainInfo;
+    public MainInfo main;
     public int visibility;
     public Wind wind;
     public Clouds clouds;
@@ -16,7 +12,7 @@ class WeatherData {
     public Sys sys;
     public int timezone;
     public int id;
-    public String cityName;
+    public String name;
     public int cod;
 }
 
