@@ -1,5 +1,6 @@
 public enum DialogState {
+    // поменять нэйминг
     Default,
-    SettingFavouriteCities,
-    WaitingFavouriteCities
+    SetFavouriteCities,
+    WaitFavouriteCities
 }

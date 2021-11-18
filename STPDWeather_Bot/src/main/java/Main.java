@@ -29,7 +29,7 @@ public class Main {
 /*
 TODO Замечания:
     + lastMessage → DialogState - enum
-    + Userrepo.setFavCities → UserState
+    + UserStateRepo.setFavCities → UserState
     + DialogState
     + Кнопки?
     + Gson.fromJson — без ручного парсинга json-а
@@ -39,6 +39,8 @@ TODO Микро:
     + Замена конкретных городов в favouriteCities
 
 TODO Глобально:
+    Комментарии без реквеста
+        ( стало холоднее; пошёл дождь )
     Комментарии к погоде
         ( возьми зонтик; оденься потеплее )
     Inline система в чатах ( выпадающее меню )

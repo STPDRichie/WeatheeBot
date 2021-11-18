@@ -7,13 +7,8 @@ public class UserStateRepo {
         return userStates.getOrDefault(chatId, new UserState()).favouriteCities;
     }
 
-    Boolean IsFavouriteCitiesSetted(String[] newCities, String chatId) {
-        if (newCities == null)
-            return false;
-
+    void setFavouriteCities(String chatId, String[] newCities) {
         userStates.put(chatId, new UserState(newCities));
-
-        return true;
     }
 
     UserState getUserState(String chatId) {

@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49227341-eb1d-43d0-b287-f53e949e4456" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/OpenWeatherMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OpenWeatherMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DialogState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DialogState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelegramBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UserStateRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserStateRepo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +64,7 @@
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
-        <env name="WEATHERBOT_TOKEN" value="2033333636:AAFARfll7qSN0QdFopeIRE5hRX740o_76n4" />
+        <env name="WEATHERBOT_TOKEN" value="2033333636:AAEQZpy3jVBL4BmaLEkPdC3IOcoL2GxBxIo" />
         <env name="WEATHERBOT_USERNAME" value="STPDWeather_Bot" />
         <env name="OPENWEATHER_API_TOKEN" value="ca69cb81718f066aebfc3fa8c0139f37" />
       </envs>

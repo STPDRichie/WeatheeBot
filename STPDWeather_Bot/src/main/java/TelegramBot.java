@@ -53,19 +53,19 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         for (ArrayList<String> row : keyboard) {
             KeyboardRow keyboardRow = new KeyboardRow();
-            for (String city : row) {
-                keyboardRow.add(city);
+            for (String element : row) {
+                keyboardRow.add(element);
             }
             keyboardRows.add(keyboardRow);
         }
 
-        ReplyKeyboardMarkup citiesKeyboard = new ReplyKeyboardMarkup();
-        sendMessage.setReplyMarkup(citiesKeyboard);
+        ReplyKeyboardMarkup telegramKeyboard = new ReplyKeyboardMarkup();
+        sendMessage.setReplyMarkup(telegramKeyboard);
 
-        citiesKeyboard.setSelective(true);
-        citiesKeyboard.setResizeKeyboard(true);
-        citiesKeyboard.setOneTimeKeyboard(false);
+        telegramKeyboard.setSelective(true);
+        telegramKeyboard.setResizeKeyboard(true);
+        telegramKeyboard.setOneTimeKeyboard(false);
 
-        citiesKeyboard.setKeyboard(keyboardRows);
+        telegramKeyboard.setKeyboard(keyboardRows);
     }
 }

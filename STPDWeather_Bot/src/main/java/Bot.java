@@ -44,47 +44,47 @@ public class Bot {
         String message;
 
         if (text.indexOf('/') == 0) {
-            message = getReplyToCommand(text, chatId);
+            if (text.equals("/set_favourite_cities")) {
+                userStateRepo.setDialogState(chatId, DialogState.SetFavouriteCities);
+            } else if (text.equals("/my_favourite_cities")) {
+                userStateRepo.setDialogState(chatId, DialogState.WaitFavouriteCities);
+            }
 
-            if (userState.dialogState == DialogState.WaitingFavouriteCities) {
-                String[] cities = userStateRepo.getFavouriteCities(chatId);
+            if (userState.dialogState == DialogState.WaitFavouriteCities) {
+                String[] currentCities = userStateRepo.getFavouriteCities(chatId);
                 StringBuilder response = new StringBuilder("\uD83C\uDF07 Твои избранные города: ");
                 for (int i = 0; i < 4; i++) {
-                    response.append("\n").append(i + 1).append(". ").append(cities[i]);
+                    response.append("\n").append(i + 1).append(". ").append(currentCities[i]);
                 }
                 message = response.toString();
 
                 userState.dialogState = DialogState.Default;
+            } else {
+                message = getReplyToCommand(text);
             }
-        } else if (userState.dialogState == DialogState.SettingFavouriteCities) {
-                if (userStateRepo.IsFavouriteCitiesSetted(
-                        parseCitiesSettingText(userStateRepo.getFavouriteCities(chatId), text),
-                        chatId)) {
-                    message = "Список успешно изменён \uD83D\uDC4D";
-                } else {
-                    message = "Ошибка произошла... \uD83D\uDE22";
-                }
-                userState.dialogState = DialogState.Default;
-                userStateRepo.setUserState(chatId, userState);
+        } else if (userState.dialogState == DialogState.SetFavouriteCities) {
+            String[] currentCities = userStateRepo.getFavouriteCities(chatId);
+            String[] newCities = parseCitiesSettingText(currentCities, text);
 
-                return new BotReply(message, createKeyboard(chatId));
+            if (newCities == null) {
+                message = "Ошибка произошла... \uD83D\uDE22";
+            } else {
+                userStateRepo.setFavouriteCities(chatId, newCities);
+                message = "Список успешно изменён \uD83D\uDC4D";
+            }
+            userState.dialogState = DialogState.Default;
         } else {
             message = getWeather(text);
         }
 
         userStateRepo.setUserState(chatId, userState);
-        return new BotReply(message, createKeyboard(chatId));
+        return new BotReply(message, createCitiesKeyboard(chatId));
     }
 
-    public String getReplyToCommand(String commandText, String chatId) {
+    public String getReplyToCommand(String commandText) {
         StringBuilder reply;
 
         if (commands.containsKey(commandText)) {
-            if (commandText.equals("/set_favourite_cities")) {
-                userStateRepo.setDialogState(chatId, DialogState.SettingFavouriteCities);
-            } else if (commandText.equals("/my_favourite_cities")) {
-                userStateRepo.setDialogState(chatId, DialogState.WaitingFavouriteCities);
-            }
             reply = new StringBuilder(commands.get(commandText));
         } else {
             reply = new StringBuilder("Не знаю такой команды... \uD83D\uDE22" + "\n\n" +
@@ -140,25 +140,22 @@ public class Bot {
         return currentCities;
     }
 
-    public ArrayList<ArrayList<String>> createKeyboard(String... chatId) {
+    public ArrayList<ArrayList<String>> createCitiesKeyboard(String chatId) {
 
-        ArrayList<ArrayList<String>> keyboard = new ArrayList<>();
+        ArrayList<ArrayList<String>> citiesKeyboard = new ArrayList<>();
         ArrayList<String> row1 = new ArrayList<>();
         ArrayList<String> row2 = new ArrayList<>();
 
-        String[] cities = new UserState().defaultCities;
-        if (chatId.length > 0) {
-            cities = userStateRepo.getFavouriteCities(chatId[0]);
-        }
+        String[] favouriteCities = userStateRepo.getFavouriteCities(chatId);
 
-        row1.add(cities[0]);
-        row1.add(cities[1]);
-        row2.add(cities[2]);
-        row2.add(cities[3]);
+        row1.add(favouriteCities[0]);
+        row1.add(favouriteCities[1]);
+        row2.add(favouriteCities[2]);
+        row2.add(favouriteCities[3]);
 
-        keyboard.add(row1);
-        keyboard.add(row2);
+        citiesKeyboard.add(row1);
+        citiesKeyboard.add(row2);
 
-        return keyboard;
+        return citiesKeyboard;
     }
 }
