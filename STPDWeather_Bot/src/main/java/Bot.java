@@ -47,10 +47,10 @@ public class Bot {
             if (text.equals("/set_favourite_cities")) {
                 userStateRepo.setDialogState(chatId, DialogState.SetFavouriteCities);
             } else if (text.equals("/my_favourite_cities")) {
-                userStateRepo.setDialogState(chatId, DialogState.WaitFavouriteCities);
+                userStateRepo.setDialogState(chatId, DialogState.TakeFavouriteCities);
             }
 
-            if (userState.dialogState == DialogState.WaitFavouriteCities) {
+            if (userState.dialogState == DialogState.TakeFavouriteCities) {
                 String[] currentCities = userStateRepo.getFavouriteCities(chatId);
                 StringBuilder response = new StringBuilder("\uD83C\uDF07 Твои избранные города: ");
                 for (int i = 0; i < 4; i++) {
