@@ -44,34 +44,19 @@ public class Bot {
         String message;
 
         if (text.indexOf('/') == 0) {
-            if (text.equals("/set_favourite_cities")) {
+            if (text.equals("/set_favourite_cities"))
                 userStateRepo.setDialogState(chatId, DialogState.SetFavouriteCities);
-            } else if (text.equals("/my_favourite_cities")) {
+            else if (text.equals("/my_favourite_cities"))
                 userStateRepo.setDialogState(chatId, DialogState.TakeFavouriteCities);
-            }
 
             if (userState.dialogState == DialogState.TakeFavouriteCities) {
-                String[] currentCities = userStateRepo.getFavouriteCities(chatId);
-                StringBuilder response = new StringBuilder("\uD83C\uDF07 Твои избранные города: ");
-                for (int i = 0; i < 4; i++) {
-                    response.append("\n").append(i + 1).append(". ").append(currentCities[i]);
-                }
-                message = response.toString();
-
+                message = takingFavouriteCities(chatId);
                 userState.dialogState = DialogState.Default;
             } else {
                 message = getReplyToCommand(text);
             }
         } else if (userState.dialogState == DialogState.SetFavouriteCities) {
-            String[] currentCities = userStateRepo.getFavouriteCities(chatId);
-            String[] newCities = parseCitiesSettingText(currentCities, text);
-
-            if (newCities == null) {
-                message = "Ошибка произошла... \uD83D\uDE22";
-            } else {
-                userStateRepo.setFavouriteCities(chatId, newCities);
-                message = "Список успешно изменён \uD83D\uDC4D";
-            }
+            message = settingFavouriteCities(chatId, text);
             userState.dialogState = DialogState.Default;
         } else {
             message = getWeather(text);
@@ -81,7 +66,30 @@ public class Bot {
         return new BotReply(message, createCitiesKeyboard(chatId));
     }
 
-    public String getReplyToCommand(String commandText) {
+    private String takingFavouriteCities(String chatId) {
+        String[] currentCities = userStateRepo.getFavouriteCities(chatId);
+        StringBuilder response = new StringBuilder("\uD83C\uDF07 Твои избранные города: ");
+        for (int i = 0; i < 4; i++) {
+            response.append("\n").append(i + 1).append(". ").append(currentCities[i]);
+        }
+        return response.toString();
+    }
+
+    private String settingFavouriteCities(String chatId, String text) {
+        String[] currentCities = userStateRepo.getFavouriteCities(chatId);
+        String[] newCities = parseCitiesSettingText(currentCities, text);
+        String message;
+
+        if (newCities == null) {
+            message = "Ошибка произошла... \uD83D\uDE22";
+        } else {
+            userStateRepo.setFavouriteCities(chatId, newCities);
+            message = "Список успешно изменён \uD83D\uDC4D";
+        }
+        return message;
+    }
+
+    private String getReplyToCommand(String commandText) {
         StringBuilder reply;
 
         if (commands.containsKey(commandText)) {
@@ -97,7 +105,7 @@ public class Bot {
         return reply.toString();
     }
 
-    public String getWeather(String cityName) {
+    private String getWeather(String cityName) {
         WeatherModel model;
 
         try {
@@ -124,7 +132,7 @@ public class Bot {
                 "\uD83C\uDF43 Скорость ветра: " + model.getWindSpeed() + " м/с\n";
     }
 
-    public static String[] parseCitiesSettingText(String[] currentCities, String newCitiesText) {
+    private String[] parseCitiesSettingText(String[] currentCities, String newCitiesText) {
         String[] citiesWithNumbers = newCitiesText.split("\\s?\\n\\s?");
         if (citiesWithNumbers.length > 4) {
             return null;
@@ -140,7 +148,7 @@ public class Bot {
         return currentCities;
     }
 
-    public ArrayList<ArrayList<String>> createCitiesKeyboard(String chatId) {
+    private ArrayList<ArrayList<String>> createCitiesKeyboard(String chatId) {
 
         ArrayList<ArrayList<String>> citiesKeyboard = new ArrayList<>();
         ArrayList<String> row1 = new ArrayList<>();
