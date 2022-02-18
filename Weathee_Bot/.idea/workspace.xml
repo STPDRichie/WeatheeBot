@@ -5,8 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49227341-eb1d-43d0-b287-f53e949e4456" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/Bot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/BotReply.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/DialogState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/OpenWeatherContent.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/OpenWeatherMap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/TelegramBot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/UserState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/UserStateRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/WeatherGetter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/WeatherModel.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +63,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="TODO_SCOPE" value="All Places" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Weather_Bot-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.21724138" />
@@ -61,11 +78,11 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
         <env name="WEATHERBOT_TOKEN" value="2033333636:AAEQZpy3jVBL4BmaLEkPdC3IOcoL2GxBxIo" />
-        <env name="WEATHERBOT_USERNAME" value="STPDWeather_Bot" />
+        <env name="WEATHERBOT_USERNAME" value="Weathee_Bot" />
         <env name="OPENWEATHER_API_TOKEN" value="ca69cb81718f066aebfc3fa8c0139f37" />
       </envs>
       <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="STPDWeather_Bot" />
+      <module name="Weathee_Bot" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

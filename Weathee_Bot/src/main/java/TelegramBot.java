@@ -9,7 +9,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.ArrayList;
 
 public class TelegramBot extends TelegramLongPollingBot {
-
     private final Bot telegramBot;
     private final String botToken;
     private final String botUsername;

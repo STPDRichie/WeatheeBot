@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Bot {
-
     private final WeatherGetter weatherGetter;
     private final UserStateRepo userStateRepo;
 
@@ -22,7 +21,7 @@ public class Bot {
                 "Введи название города, в котором хочешь узнать погоду" + "\n" +
                         "Для дополнительной информации вызови /help");
         commands.put("/help",
-                "Привет! \u270B Я STPDWeatherBot \u2601" + "\n" +
+                "Привет! \u270B Я Визи \u2601" + "\n" +
                         "Напиши название города, и я покажу погоду в нём!" + "\n" +
                         "Также ты можешь сохранить четыре избранных города командой " + "/set_favourite_cities" + "\n" +
                         "Ещё можешь вывести список этих городов командой " + "/my_favourite_cities");
