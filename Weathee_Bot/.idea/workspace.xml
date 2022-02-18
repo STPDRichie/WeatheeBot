@@ -4,27 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49227341-eb1d-43d0-b287-f53e949e4456" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/Bot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/BotReply.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/DialogState.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/OpenWeatherContent.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/OpenWeatherMap.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/TelegramBot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/UserState.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/UserStateRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/WeatherGetter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STPDWeather_Bot/src/main/java/WeatherModel.java" beforeDir="false" />
-    </list>
+    <list default="true" id="49227341-eb1d-43d0-b287-f53e949e4456" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
